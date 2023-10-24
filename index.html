@@ -39,6 +39,8 @@
             </div>
         </div>
     </div>
+
+
     <script>
         (() => {
             // Constants for photo dimensions
@@ -84,7 +86,7 @@
                             option.text = device.label || `Camera ${videoDevices.indexOf(device) + 1}`;
                             cameraSelect.appendChild(option);
                         });
-                        // console.log(cameraSelect.value)
+
                         video.srcObject = null;
                         video.srcObject = await navigator.mediaDevices.getUserMedia({
                             video: {
@@ -179,6 +181,8 @@
                     const tracks = stream.getTracks();
                     tracks.forEach(track => track.stop());
                     video.srcObject = null;
+                    cameraSelect = document.getElementById("cameraSelect");
+                    cameraSelect.innerHTML = "";
                 }
             });
 
