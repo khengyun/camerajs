@@ -13,9 +13,10 @@
 </head>
 
 <body>
-    <button id="openCameraModal" class="btn btn-primary">Open Camera Modal</button>
+    <button id="openCameraModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cameraModal">Open
+        Camera Modal</button>
     <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="cameraModalLabel">Detect Your Food</h5>
@@ -28,13 +29,28 @@
                     <div class="camera">
                         <video id="video" class="w-100">Video stream not available.</video>
                         <select id="cameraSelect" class="form-select"></select>
-                        <button id="startbutton" class="btn btn-primary">Take photo</button>
+                        <button id="startbutton" data-bs-target="#cameraModal2" data-bs-toggle="modal"
+                            data-bs-dismiss="modal" class="btn btn-primary">Take photo</button>
                     </div>
-                    <canvas id="canvas" class="d-block mx-auto"> </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="modal fade" id="cameraModal2" tabindex="-1" aria-labelledby="cameraModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cameraModalLabel2">Modal 2</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="canvas" class="d-block mx-auto"> </canvas>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" data-bs-target="#cameraModal" data-bs-toggle="modal"
+                        data-bs-dismiss="modal" data-bs-toggle="popover" data-bs-trigger="focus"
+                        title="Quét tiếp tục nếu món ăn không như bạn muốn.">Try again</button>
                 </div>
             </div>
         </div>
@@ -45,7 +61,7 @@
         (() => {
             // Constants for photo dimensions
             let IMAGE_VALUE = null;
-            const PHOTO_WIDTH = 320;
+            const PHOTO_WIDTH = 450;
             let PHOTO_HEIGHT = 0;
 
             // Elements from the HTML
@@ -166,12 +182,16 @@
                 clearPhoto();
             }
 
-            const modalcamera = new bootstrap.Modal(document.getElementById('cameraModal'));
-
-            document.getElementById('openCameraModal').addEventListener('click', () => {
-                modalcamera.show();
+            // const modalcamera = new bootstrap.Modal(document.getElementById('cameraModal'));
+            var myModalEl = document.getElementById('cameraModal')
+            myModalEl.addEventListener('show.bs.modal', function (event) {
                 startup();
-            });
+            })
+
+            // document.getElementById('cameraModal').addEventListener('show.bs.modal', () => {
+            //     // modalcamera.show();
+            //     startup();
+            // });
 
 
             document.getElementById('cameraModal').addEventListener('hidden.bs.modal', () => {
